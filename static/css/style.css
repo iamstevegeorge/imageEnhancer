@@ -1,0 +1,35 @@
+body {
+  background-color: lightgreen;
+}
+
+.wrapper {
+  height: 600px;
+  width: 600px;
+  position: absolute;
+  right: 100px;
+  overflow: scroll;
+  background: lightgray;
+  align-content: right;
+}
+
+.wrapper img {
+ /* height: 100%;*/
+  width: 100%;
+  object-fit: contain;
+}
+
+.tess {
+  height: 500px;
+  width: 500px;
+  overflow: auto;
+  background: lightgray;
+}
+
+.list{
+	font-weight: bold;
+	color: white; 
+}
+
+
+
+

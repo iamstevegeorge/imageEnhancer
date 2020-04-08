@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<link rel="stylesheet" type="text/css" href="./static/css/style.css">
+<body>
+	<header>
+		<h1>Image Optimization</h1>
+	</header>
+	<div class="wrapper"> 
+	<img class="image" id="image" src="{{ path }}" alt="User Image">
+	</div> 
+	<form action="submit" method="POST">
+		<label for="scroll1">Erode</label>
+		<select id="scroll1" class="scroll" name="Erode">
+		<option>1</option>
+		<option>2</option>
+		<option>3</option>
+		<option>4</option>
+		</select><br>
+		<label for="scroll2">Dilate</label>
+		<select id="scroll2" class="scroll" name="Dilate">
+		<option>1</option>
+		<option>2</option>
+		<option>3</option>
+		<option>4</option>
+		</select><br>
+		<label for="scroll3">Blur  </label>
+		<select id="scroll3" class="scroll" name="Blur">
+		<option>1</option>
+		<option>2</option>
+		<option>3</option>
+		<option>4</option>
+		</select><br>
+		<label for="scroll4">Resize width</label>
+		<select id="scroll4" class="scroll" name="width">
+		<option>1</option>
+		<option>2</option>
+		<option>3</option>
+		<option>4</option>
+		</select>
+		<label for="scroll5">Resize height</label>
+		<select id="scroll5" class="scroll" name="height">
+		<option>1</option>
+		<option>2</option>
+		<option>3</option>
+		<option>4</option>
+		</select><br>
+		<label for="scroll6">Interpolation</label>
+		<select id="scroll6" class="scroll" name="Interpolation">
+		<option>INTER_LINEAR</option>
+		<option>INTER_CUBIC</option>
+		<option>INTER_AREA</option>
+		<option>INTER_NEAREST</option>
+		<option>INTER_LANCZOS4 </option>
+		</select><br><br>
+		<button class="go-btn" type="submit">SUBMIT
+	</form>
+	<br>
+	<button class="refresh" type="submit">REFRESH<br>
+	<a href="/">
+	<button class="back" type="submit">BACK </a>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		
+		$(document).ready(function(){
+
+			
+			$('.scroll').change(function(){
+
+				// alert($('#scroll1').val())	  
+				var erode = $("#scroll1").val();
+				var dilate = $('#scroll2').val();
+				var blur = $('#scroll3').val();
+				var width = $('#scroll4').val();
+				var height = $('#scroll5').val();
+				var Interpolation = $('#scroll6').val();
+				// alert(erode)
+				// alert(dilate)	 
+				  
+				  $.ajax({
+				  	type:"POST",
+				  	url:"final",  
+				  	contentType: "application/json;charset=utf-8",
+			        dataType: "json",
+				  	data:({'erode':erode,'dilate':dilate,'blur':blur,'width':width,'height':height,'interpolation':Interpolation,'image':"{{ filename }}"}),
+                        success: function(json) { 
+                    $("#image").prop('src',json.result);
+
+                }});
+			 			
+			})
+
+			$('.refresh').click(function(){
+				$.ajax({
+					type:"POST",
+					url:"clean",
+					contentType: "application/json;charset=utf-8",
+			        dataType: "json",
+				  	data:({'image':"{{ filename }}"}),  
+				  	success: function(json) { 
+				  		// alert("{{path}}")
+                    $("#image").prop('src',json.result);
+				  } })
+			})
+
+			$('.go-btn').click(function(){
+
+
+			})
+		// $('html[manifest=saveappoffline.appcache]').attr('content', '');	
+		});
+
+	</script>
+</body>
+</html>
